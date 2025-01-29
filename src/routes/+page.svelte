@@ -1,3 +1,7 @@
+<script>
+	import Tree from '$lib/components/Tree.svelte';
+</script>
+
 <h1><a href="/">markdowntools.org</a></h1>
 <p>Your daily basis tool when you write markdown.</p>
 
@@ -17,7 +21,7 @@
 <section id="tree">
     <h2>Tree</h2>
     <div style="height: 480px;">
-        <p>This is a tree section.</p>
+        <Tree />
     </div>
 </section>
 
