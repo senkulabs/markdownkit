@@ -1,4 +1,5 @@
 <script>
+	import GitTree from '$lib/components/GitTree.svelte';
 	import Tree from '$lib/components/Tree.svelte';
 </script>
 
@@ -28,7 +29,7 @@
 <section id="git-tree">
     <h2>Git Tree</h2>
     <div style="height: 480px">
-        <p>This is a Git tree section.</p>
+        <GitTree/>
     </div>
 </section>
 
