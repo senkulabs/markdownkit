@@ -1,8 +1,7 @@
 <script>
-
 	import Tree from '$lib/components/Tree.svelte';
-
 </script>
+
 <h1><a href="/">markdowntools.org</a></h1>
 <p>Your daily basis tool when you write markdown.</p>
 
