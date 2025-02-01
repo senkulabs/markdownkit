@@ -108,6 +108,7 @@
 			};
 
 			let url = new URL(window.location.origin);
+			url.pathname = '/tree';
 			url.searchParams.append('snippet', btoa(JSON.stringify(data)));
 			if (navigator.canShare()) {
 				await navigator.share(url.href);
