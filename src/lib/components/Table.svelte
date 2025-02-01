@@ -101,49 +101,53 @@
     }
 </script>
 
-<div style="overflow-x: auto;">
-    <table style="width: 100%; border-collapse: collapse;">
-        <thead>
-            <tr>
-                <th></th>
-                {#each tableData[0] as header, colIndex}
-                    <th>
-                        <div>
-                            <button onclick={() => cycleAlignment(colIndex)}>Align</button>
-                            <button onclick={() => removeColumn(colIndex)}>Remove column</button>
-                        </div>
-                    </th>
-                {/each}
-                <th>
-                    <button onclick={addColumn}>Add column</button>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each tableData as row, rowIndex}
+<div class="container p-2 mx-auto">
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 1rem;">
+            <thead>
                 <tr>
-                    {#if rowIndex > 0}
-                        <td>
-                            <button onclick={() => removeRow(rowIndex)}>Delete row</button>
-                        </td>
-                    {/if}
-                    {#each row as cell, colIndex}
-                        <td>
-                            <input type="text" value={cell} oninput={updateCell(rowIndex, colIndex, cell)}
-                            style:text-align={aligments[colIndex] === 'left' ? 'left' : aligments[colIndex] === 'center' ? 'center' : 'right'} />
-                        </td>
+                    <th></th>
+                    {#each tableData[0] as _, colIndex}
+                        <th style="padding: .5rem; border: 1px solid gray;">
+                            <div>
+                                <button onclick={() => cycleAlignment(colIndex)}>Align</button>
+                                <button onclick={() => removeColumn(colIndex)}>Remove column</button>
+                            </div>
+                        </th>
                     {/each}
+                    <th>
+                        <button onclick={addColumn}>Add column</button>
+                    </th>
                 </tr>
-            {/each}
-        </tbody>
-    </table>
-
-    <div>
-        <button onclick={addRow}>Add row</button>
-        <button onclick={generateMarkdown}>Generate markdown</button>
+            </thead>
+            <tbody>
+                {#each tableData as row, rowIndex}
+                    <tr>
+                        <td style="padding: .5rem;">
+                            {#if rowIndex > 0}
+                            <button onclick={() => removeRow(rowIndex)}>Delete row</button>
+                            {/if}
+                        </td>                
+                        {#each row as cell, colIndex}
+                            <td style="padding: .5rem; border: 1px solid gray;">
+                                <input type="text" value={cell} oninput={updateCell(rowIndex, colIndex, cell)}
+                                style:text-align={aligments[colIndex] === 'left' ? 'left' : aligments[colIndex] === 'center' ? 'center' : 'right'}
+                                style="width: 100%; padding: .25rem; border: 1px solid gray;" />
+                            </td>
+                        {/each}
+                        <td>&nbsp;</td>
+                    </tr>
+                {/each}
+            </tbody>
+        </table>
+    
+        <div style="margin-bottom: 1rem;">
+            <button onclick={addRow}>Add row</button>
+            <button onclick={generateMarkdown}>Generate markdown</button>
+        </div>
+    
+        {#if output}
+            <pre style="overflow-x: auto; padding: 1rem;">{output}</pre>
+        {/if}
     </div>
-
-    {#if output}
-        <pre style="overflow-x: auto; padding: 1rem;">{output}</pre>
-    {/if}
 </div>

@@ -188,25 +188,6 @@
 </div>
 
 <style>
-    .p-2 {
-    margin: .5rem;
-  }
-  
-  .container {
-    width: 100%;
-  }
-  
-  @media screen and (min-width: 1280px) {
-    .container {
-      max-width: 1280px;
-    }
-  }
-  
-  .mx-auto {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
   .editor {
     display: flex;
     flex-direction: column;
@@ -224,7 +205,7 @@
   
   .tree {
     width: 480px;
-    max-height: 480px;
+    height: 320px;
     white-space: pre;
     font-family: monospace;
     font-size: 0.875rem;

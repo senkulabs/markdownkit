@@ -4,39 +4,43 @@
 	import Tree from '$lib/components/Tree.svelte';
 </script>
 
-<h1><a href="/">markdowntools.org</a></h1>
-<p>Your daily basis tool when you write markdown.</p>
+<div class="container p-2 mx-auto">
+    <h1><a href="/">markdowntools.org</a></h1>
+    <p>Your daily basis tool when you write markdown.</p>
 
-<nav>
-	<a href="/tree">Tree</a>
-    <a href="/git-tree">Git Tree</a>
-    <a href="/table">Table</a>
-</nav>
+    <nav>
+        <a href="/tree">Tree</a>
+        <a href="/git-tree">Git Tree</a>
+        <a href="/table">Table</a>
+    </nav>
 
-<h2>Quick Access</h2>
-<nav>
-    <a href="#tree">Tree</a>
-    <a href="#git-tree">Git Tree</a>
-    <a href="#table">Table</a>
-</nav>
+    <h2>Quick Access</h2>
+    <nav>
+        <a href="#tree">Tree</a>
+        <a href="#git-tree">Git Tree</a>
+        <a href="#table">Table</a>
+    </nav>
 
-<section id="tree">
-    <h2>Tree</h2>
-    <div style="height: 480px;">
-        <Tree />
+    <div class="section">
+        <section id="tree">
+            <h2><a href="#tree">Tree</a></h2>
+            <Tree />
+        </section>
+    
+        <section id="git-tree">
+            <h2><a href="#git-tree">Git Tree</a></h2>
+            <GitTree/>
+        </section>
+    
+        <section id="table">
+            <h2><a href="#table">Table</a></h2>
+            <Table/>
+        </section>
     </div>
-</section>
+</div>
 
-<section id="git-tree">
-    <h2>Git Tree</h2>
-    <div style="height: 480px">
-        <GitTree/>
-    </div>
-</section>
-
-<section id="table">
-    <h2>Table</h2>
-    <div style="height: 480px;">
-        <Table/>
-    </div>
-</section>
+<style>
+    section {
+        min-height: 50%;
+    }
+</style>
