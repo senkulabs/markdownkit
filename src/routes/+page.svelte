@@ -1,5 +1,6 @@
 <script>
 	import GitTree from '$lib/components/GitTree.svelte';
+    import Table from '$lib/components/Table.svelte';
 	import Tree from '$lib/components/Tree.svelte';
 </script>
 
@@ -36,6 +37,6 @@
 <section id="table">
     <h2>Table</h2>
     <div style="height: 480px;">
-        <p>This is a table section.</p>
+        <Table/>
     </div>
 </section>
