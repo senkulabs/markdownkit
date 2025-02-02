@@ -3,20 +3,20 @@
 </script>
 
 <svelte:head>
-	<title>Git Tree - Markdown Tools</title>
-	<meta name="title" content="Git Tree - Markdown Tools">
-	<meta name="description" content="Your daily basis tool when you write markdown. It covers markdown tree generator, markdown git tree generator, and markdown table generator">
+	<title>Git Tree - Markdown Kit</title>
+	<meta name="title" content="Git Tree - Markdown Kit">
+	<meta name="description" content="Your daily tools for writing markdown. It covers markdown tree generator, markdown git tree generator, and markdown table generator">
 	<meta name="og:type" content="website">
-	<meta name="og:title" content="Git Tree - Markdown Tools">
-	<meta name="og:description" content="Your daily basis tool when you write markdown. It covers markdown tree generator, markdown git tree generator, and markdown table generator">
+	<meta name="og:title" content="Git Tree - Markdown Kit">
+	<meta name="og:description" content="Your daily tools for writing markdown. It covers markdown tree generator, markdown git tree generator, and markdown table generator">
 	<meta name="twitter:card" content="summary">
-	<meta name="twitter:title" content="Git Tree - Markdown Tools">
-	<meta name="twitter:description" content="Your daily basis tool when you write markdown. It covers markdown tree generator, markdown git tree generator, and markdown table generator">
+	<meta name="twitter:title" content="Git Tree - Markdown Kit">
+	<meta name="twitter:description" content="Your daily tools for writing markdown. It covers markdown tree generator, markdown git tree generator, and markdown table generator">
 </svelte:head>
 
 <div class="container p2 mx-auto">
-    <h1><a href="/">markdowntools.org</a></h1>
-    <p>Your daily basis tool when you write markdown.</p>
+    <h1><a href="/">markdownkit.org</a></h1>
+    <p>Your daily tools for writing markdown.</p>
     
     <nav>
         <a href="/tree">Tree</a>
