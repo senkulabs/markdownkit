@@ -12,7 +12,13 @@
     function submit(event) {
         event.preventDefault();
         if (gitRepo !== '') {
-            gitPromise = fetch(`https://api.github.com/repos/${gitRepo}/git/trees/main?recursive=1`).then(response => response.json());   
+            gitPromise = fetch(`https://api.github.com/repos/${gitRepo}/git/trees/main?recursive=1`).then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP Error! status ${response.status}`);
+                }
+
+                return response.json();
+            });   
         }
     }
 
