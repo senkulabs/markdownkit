@@ -138,7 +138,7 @@
 	<div class="editor">
 		<textarea
 			bind:this={textarea}
-			style="width: 480px; height: 320px; tab-size: 2; font-size: 1rem;"
+			style="width: 100%; height: 320px; tab-size: 2; font-size: 1rem;"
 			bind:value
 			onkeydown={handleTabKey}
 		></textarea>
@@ -196,7 +196,7 @@
   }
   
   .tree {
-    width: 480px;
+    width: 100%;
     height: 320px;
     white-space: pre;
     font-family: monospace;
