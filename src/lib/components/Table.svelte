@@ -6,6 +6,7 @@
 
     let aligments = $state(['left', 'left', 'left']);
     let output = $state('');
+    let copied = $state(false);
 
     function addRow() {
         const newRow = new Array(tableData[0].length).fill('New Cell');
@@ -99,6 +100,20 @@
 
         output = markdown;
     }
+
+    async function copyMarkdown() {
+        try {
+			await navigator.clipboard.writeText(output);
+			copied = true;
+
+			// Reset the "copied" message after 2 seconds
+			setTimeout(() => {
+				copied = false;
+			}, 2000);
+		} catch (error) {
+			console.error('Failed to copy text:', error);
+		}
+    }
 </script>
 
 <div class="container p-2 mx-auto">
@@ -144,6 +159,7 @@
         <div style="margin-bottom: 1rem;">
             <button onclick={addRow}>Add row</button>
             <button onclick={generateMarkdown}>Generate markdown</button>
+            <button onclick={copyMarkdown} disabled={output ? false : true}>{copied ? 'Copied' : 'Copy markdown'}</button>
         </div>
     
         {#if output}
