@@ -41,17 +41,6 @@
     }
 
     /**
-	 * @param {string | number} rowIndex
-	 * @param {string | number} colIndex
-	 * @param {string} value
-	 */
-    function updateCell(rowIndex, colIndex, value) {
-        const newTableData = [...tableData];
-        newTableData[rowIndex][colIndex] = value;
-        tableData = newTableData;
-    }
-
-    /**
 	 * @param {string | number} colIndex
 	 */
     function cycleAlignment(colIndex) {
@@ -145,7 +134,7 @@
                         </td>                
                         {#each row as cell, colIndex}
                             <td style="padding: .5rem; border: 1px solid gray;">
-                                <input type="text" value={cell} oninput={updateCell(rowIndex, colIndex, cell)}
+                                <input type="text" bind:value={tableData[rowIndex][colIndex]}
                                 style:text-align={aligments[colIndex] === 'left' ? 'left' : aligments[colIndex] === 'center' ? 'center' : 'right'}
                                 style="width: 100%; padding: .25rem; border: 1px solid gray;" />
                             </td>
