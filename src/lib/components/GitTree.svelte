@@ -4,6 +4,7 @@
 
     let gitPromise = $state();
     let gitRepo = $state('');
+    let copied = $state(false);
 
     /**
      * @param {{ preventDefault: () => void; }} event
@@ -12,6 +13,23 @@
         event.preventDefault();
         if (gitRepo !== '') {
             gitPromise = fetch(`https://api.github.com/repos/${gitRepo}/git/trees/main?recursive=1`).then(response => response.json());   
+        }
+    }
+
+    /**
+	 * @param {string} content
+	 */
+    async function handleCopy(content) {
+        try {
+            await navigator.clipboard.writeText(content);
+			copied = true;
+
+			// Reset the "copied" message after 2 seconds
+			setTimeout(() => {
+				copied = false;
+			}, 2000);
+        } catch (error) {
+            console.log('Failed to copy text: ', error);
         }
     }
 </script>
@@ -35,7 +53,8 @@
                     depthIndicator: '',
                 }
             }) }
-            <div class="git-tree">
+            <div class="git-tree" style="position: relative;">
+                <button style="position: absolute; top: .5rem; right: .5rem;" onclick={() => handleCopy(generateTree(convertToTree(gitTree)))}>{copied ? 'Copied' : 'Copy'}</button>
                 { generateTree(convertToTree(gitTree)) }
             </div>
         {:catch error}
@@ -48,7 +67,7 @@
     .git-tree {
         width: 480px;
         max-height: 480px;
-        white-space: pre;
+        white-space: pre-line;
         font-family: monospace;
         font-size: 0.875rem;
         line-height: 2;
