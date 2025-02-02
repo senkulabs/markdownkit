@@ -7,6 +7,23 @@
     let aligments = $state(['left', 'left', 'left']);
     let output = $state('');
     let copied = $state(false);
+    let shared = $state(false);
+
+    $effect(() => {
+		const url = new URL(window.location.href);
+		const searchParams = url.searchParams;
+
+		if (searchParams.has('content')) {
+			// @ts-ignore
+			let content = JSON.parse(atob(searchParams.get('content')));
+            if (content.hasOwnProperty('tableData')) {
+                tableData = content.tableData;
+            }
+            if (content.hasOwnProperty('aligments')) {
+                aligments = content.aligments;
+            }
+		}
+	});
 
     function addRow() {
         const newRow = new Array(tableData[0].length).fill('New Cell');
@@ -103,6 +120,31 @@
 			console.error('Failed to copy text:', error);
 		}
     }
+
+    async function shareMarkdown() {
+        try {
+            let content = {
+                tableData,
+                aligments
+            };
+			let url = new URL(window.location.origin);
+			url.pathname = '/table';
+			url.searchParams.append('content', btoa(JSON.stringify(content)));
+			if (navigator.canShare()) {
+				await navigator.share(url.href);
+			} else {
+				await navigator.clipboard.writeText(url.href);
+			}
+
+			shared = true;
+
+			setTimeout(() => {
+				shared = false;
+			}, 2000);
+		} catch (error) {
+			console.error('Failed to shared', error);
+		}
+    }
 </script>
 
 <div class="container p-2 mx-auto">
@@ -149,6 +191,7 @@
             <button onclick={addRow}>Add row</button>
             <button onclick={generateMarkdown}>Generate markdown</button>
             <button onclick={copyMarkdown} disabled={output ? false : true}>{copied ? 'Copied' : 'Copy markdown'}</button>
+            <button onclick={shareMarkdown} disabled={output ? false : true}>{shared ? 'Shared' : 'Share markdown'}</button>
         </div>
     
         {#if output}
