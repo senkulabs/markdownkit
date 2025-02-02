@@ -6,6 +6,24 @@
 
     let aligments = $state(['left', 'left', 'left']);
     let output = $state('');
+    let copied = $state(false);
+    let shared = $state(false);
+
+    $effect(() => {
+		const url = new URL(window.location.href);
+		const searchParams = url.searchParams;
+
+		if (searchParams.has('content')) {
+			// @ts-ignore
+			let content = JSON.parse(atob(searchParams.get('content')));
+            if (content.hasOwnProperty('tableData')) {
+                tableData = content.tableData;
+            }
+            if (content.hasOwnProperty('aligments')) {
+                aligments = content.aligments;
+            }
+		}
+	});
 
     function addRow() {
         const newRow = new Array(tableData[0].length).fill('New Cell');
@@ -37,17 +55,6 @@
             tableData = newTableData;
             aligments = aligments.filter((_, index) => index !== colIndex);
         }
-    }
-
-    /**
-	 * @param {string | number} rowIndex
-	 * @param {string | number} colIndex
-	 * @param {string} value
-	 */
-    function updateCell(rowIndex, colIndex, value) {
-        const newTableData = [...tableData];
-        newTableData[rowIndex][colIndex] = value;
-        tableData = newTableData;
     }
 
     /**
@@ -99,6 +106,45 @@
 
         output = markdown;
     }
+
+    async function copyMarkdown() {
+        try {
+			await navigator.clipboard.writeText(output);
+			copied = true;
+
+			// Reset the "copied" message after 2 seconds
+			setTimeout(() => {
+				copied = false;
+			}, 2000);
+		} catch (error) {
+			console.error('Failed to copy text:', error);
+		}
+    }
+
+    async function shareMarkdown() {
+        try {
+            let content = {
+                tableData,
+                aligments
+            };
+			let url = new URL(window.location.origin);
+			url.pathname = '/table';
+			url.searchParams.append('content', btoa(JSON.stringify(content)));
+			if (navigator.canShare()) {
+				await navigator.share(url.href);
+			} else {
+				await navigator.clipboard.writeText(url.href);
+			}
+
+			shared = true;
+
+			setTimeout(() => {
+				shared = false;
+			}, 2000);
+		} catch (error) {
+			console.error('Failed to shared', error);
+		}
+    }
 </script>
 
 <div class="container p-2 mx-auto">
@@ -130,7 +176,7 @@
                         </td>                
                         {#each row as cell, colIndex}
                             <td style="padding: .5rem; border: 1px solid gray;">
-                                <input type="text" value={cell} oninput={updateCell(rowIndex, colIndex, cell)}
+                                <input type="text" bind:value={tableData[rowIndex][colIndex]}
                                 style:text-align={aligments[colIndex] === 'left' ? 'left' : aligments[colIndex] === 'center' ? 'center' : 'right'}
                                 style="width: 100%; padding: .25rem; border: 1px solid gray;" />
                             </td>
@@ -144,6 +190,8 @@
         <div style="margin-bottom: 1rem;">
             <button onclick={addRow}>Add row</button>
             <button onclick={generateMarkdown}>Generate markdown</button>
+            <button onclick={copyMarkdown} disabled={output ? false : true}>{copied ? 'Copied' : 'Copy markdown'}</button>
+            <button onclick={shareMarkdown} disabled={output ? false : true}>{shared ? 'Shared' : 'Share markdown'}</button>
         </div>
     
         {#if output}

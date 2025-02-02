@@ -1,6 +1,6 @@
-# Markdown Tools
+# Markdown Kit
 
-Your daily basis tools when you write Markdown. It covers:
+Your daily tools for writing markdown. It covers:
 
 - Tree generator.
 - Git tree generator (currently GitHub).

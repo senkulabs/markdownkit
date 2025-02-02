@@ -36,23 +36,18 @@
 		const url = new URL(window.location.href);
 		const searchParams = url.searchParams;
 
-		if (searchParams.has('snippet')) {
-			const result = JSON.parse(atob(searchParams.get('snippet')));
-			if (result.hasOwnProperty('content')) {
-				value = JSON.parse(result.content);
-			}
-			if (result.hasOwnProperty('charset')) {
-				fancyMode = result.charset === 'utf-8' ? true : false;
-			}
-			if (result.hasOwnProperty('trailingSlashDir')) {
-				showTrailingSlashDir = result.trailingSlashDir;
-			}
-			if (result.hasOwnProperty('fullPath')) {
-				showFullPath = result.fullPath;
-			}
-			if (result.hasOwnProperty('rootDot')) {
-				showRootDot = result.rootDot;
-			}
+		if (searchParams.has('content')) {
+			// @ts-ignore
+			value = JSON.parse(atob(searchParams.get('content')));
+		}
+
+		if (searchParams.has('options')) {
+			// @ts-ignore
+			let options = JSON.parse(atob(searchParams.get('options')));
+			fancyMode = options.charset === 'utf-8' ? true : false;
+			showTrailingSlashDir = options.trailingSlashDir;
+			showFullPath = options.fullPath;
+			showRootDot = options.rootDot;
 		}
 	});
 
@@ -102,14 +97,10 @@
 
 	async function handleShare() {
 		try {
-			let data = {
-				content: JSON.stringify(value),
-				...options
-			};
-
 			let url = new URL(window.location.origin);
 			url.pathname = '/tree';
-			url.searchParams.append('snippet', btoa(JSON.stringify(data)));
+			url.searchParams.append('content', btoa(JSON.stringify(value)));
+			url.searchParams.append('options', btoa(JSON.stringify(options)));
 			if (navigator.canShare()) {
 				await navigator.share(url.href);
 			} else {
